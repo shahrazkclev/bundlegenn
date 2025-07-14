@@ -189,6 +189,16 @@ const BundleGenerator = () => {
       return;
     }
 
+    // For special bundle, redirect directly to Stripe without calling make.com
+    if (isSpecialBundle) {
+      window.open(specialBundleStripeLink, '_blank');
+      toast({
+        title: "Redirecting to payment!",
+        description: "You're being redirected to complete your purchase.",
+      });
+      return;
+    }
+
     setBundleCreating(true);
     setError('');
 
@@ -223,10 +233,8 @@ const BundleGenerator = () => {
         totalAmount: subtotal,
         discountPercentage,
         discountAmount,
-        finalAmount: isSpecialBundle ? 149 : finalAmount,
-        timestamp: new Date().toISOString(),
-        isSpecialBundle,
-        stripeLink: isSpecialBundle ? specialBundleStripeLink : null
+        finalAmount: finalAmount,
+        timestamp: new Date().toISOString()
       };
 
       const result = await createBundle(bundleData);
