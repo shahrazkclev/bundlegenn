@@ -30,13 +30,20 @@ const BundleGenerator = () => {
     name: '',
     sessionId: '',
     verificationCode: '',
-    savedVerificationCode: '' // Store the verified code
+    savedVerificationCode: ''
   });
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [bundleCreating, setBundleCreating] = useState(false);
+  const [creationProgress, setCreationProgress] = useState(0);
   const [error, setError] = useState('');
   const [bundleResponse, setBundleResponse] = useState(null);
+  const [emailSuggestions, setEmailSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const { toast } = useToast();
+
+  // Email domain suggestions
+  const emailDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'icloud.com', 'protonmail.com'];
 
   // Calculate totals and discounts
   const subtotal = selectedProducts.reduce((sum, productId) => {
