@@ -171,22 +171,16 @@ const BundleGenerator = () => {
         stripeLink: isSpecialBundle ? specialBundleStripeLink : null
       };
 
-      const result = await mockCreateBundle(bundleData);
+      const result = await createBundle(bundleData);
       if (result.success) {
-        if (isSpecialBundle) {
-          toast({
-            title: "Bundle created!",
-            description: "Redirecting to checkout...",
-          });
-          // In real implementation, would redirect to Stripe
-          console.log('Would redirect to:', result.redirectUrl);
-        } else {
-          toast({
-            title: "Bundle created!",
-            description: "Your bundle has been created successfully.",
-          });
-        }
+        setBundleResponse(result);
         setCurrentStep(4);
+        toast({
+          title: "Bundle created!",
+          description: result.message || "Your bundle has been created successfully.",
+        });
+      } else {
+        setError(result.message || 'Failed to create bundle');
       }
     } catch (err) {
       setError('Failed to create bundle. Please try again.');
