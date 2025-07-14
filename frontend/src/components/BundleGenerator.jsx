@@ -528,20 +528,6 @@ const BundleGenerator = () => {
           </Button>
         )}
         
-        {isSpecialBundle && (
-          <>
-            <p className="text-sm text-amber-800 font-medium">
-              Special Bundle Package - Premium Deal!
-            </p>
-            <Button 
-              onClick={() => window.open(specialBundleStripeLink, '_blank')}
-              className="w-full bg-gray-900 hover:bg-gray-800 text-white"
-            >
-              Pay with Special Bundle Link
-            </Button>
-          </>
-        )}
-        
         <Separator className="bg-gray-300" />
         
         <Button 
