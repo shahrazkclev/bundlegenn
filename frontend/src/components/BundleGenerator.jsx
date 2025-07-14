@@ -255,14 +255,14 @@ const BundleGenerator = () => {
   );
 
   const renderEmailStep = () => (
-    <Card className="w-full max-w-md mx-auto bg-gray-800 border-gray-700">
+    <Card className="w-full max-w-md mx-auto bg-white border-gray-300 shadow-lg">
       <CardHeader>
-        <CardTitle className="text-center text-white">Get Started</CardTitle>
+        <CardTitle className="text-center text-gray-900">Get Started</CardTitle>
       </CardHeader>
       <CardContent>
-        <form onSubmit={handleEmailSubmit} className="space-y-4">
+        <form onSubmit={handleEmailSubmit} className="space-y-6">
           <div className="relative">
-            <Label htmlFor="email" className="text-gray-300">Email Address</Label>
+            <Label htmlFor="email" className="text-gray-700">Email Address</Label>
             <Input
               id="email"
               type="email"
@@ -270,16 +270,16 @@ const BundleGenerator = () => {
               onChange={handleEmailChange}
               onFocus={() => setShowSuggestions(emailSuggestions.length > 0)}
               placeholder="Enter your email"
-              className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+              className="bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:ring-amber-500"
               required
             />
             {showSuggestions && (
-              <div className="absolute top-full left-0 right-0 bg-gray-700 border border-gray-600 rounded-md mt-1 z-10">
+              <div className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-md mt-2 z-10 shadow-lg">
                 {emailSuggestions.map((suggestion, index) => (
                   <div
                     key={index}
                     onClick={() => selectEmailSuggestion(suggestion)}
-                    className="px-3 py-2 hover:bg-gray-600 cursor-pointer text-gray-300 text-sm"
+                    className="px-3 py-2 hover:bg-amber-50 cursor-pointer text-gray-700 text-sm border-b border-gray-100 last:border-b-0"
                   >
                     {suggestion}
                   </div>
@@ -288,14 +288,14 @@ const BundleGenerator = () => {
             )}
           </div>
           <div>
-            <Label htmlFor="name" className="text-gray-300">Full Name</Label>
+            <Label htmlFor="name" className="text-gray-700">Full Name</Label>
             <Input
               id="name"
               type="text"
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
               placeholder="Enter your full name"
-              className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+              className="bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:ring-amber-500"
               required
             />
           </div>
@@ -304,8 +304,12 @@ const BundleGenerator = () => {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
-            Send Verification Code
+          <Button 
+            type="submit" 
+            className="w-full bg-gray-900 hover:bg-gray-800 text-white"
+            disabled={emailSubmitting}
+          >
+            {emailSubmitting ? 'Sending...' : 'Send Verification Code'}
           </Button>
         </form>
       </CardContent>
