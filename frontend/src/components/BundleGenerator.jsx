@@ -83,26 +83,23 @@ const BundleGenerator = () => {
       return;
     }
 
-    setLoading(true);
     setError('');
-
-    try {
-      const result = await sendVerificationCode(formData.email, formData.name);
-      if (result.success) {
-        setFormData(prev => ({ ...prev, sessionId: result.sessionId }));
-        setCurrentStep(2);
-        toast({
-          title: "Verification code sent!",
-          description: "Check your email for the 4-digit code.",
-        });
-      } else {
-        setError(result.message || 'Failed to send verification code');
-      }
-    } catch (err) {
-      setError('Failed to send verification code. Please try again.');
-    } finally {
-      setLoading(false);
-    }
+    
+    // Generate session ID on frontend
+    const sessionId = `bundle_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+    setFormData(prev => ({ ...prev, sessionId }));
+    
+    // Fire webhook in background (don't wait for response)
+    sendVerificationCode(formData.email, formData.name, sessionId).catch(err => {
+      console.error('Background webhook error:', err);
+    });
+    
+    // Immediately proceed to verification step
+    setCurrentStep(2);
+    toast({
+      title: "Verification code sent!",
+      description: "Check your email for the 4-digit code.",
+    });
   };
 
   const handleVerificationSubmit = async (e) => {
