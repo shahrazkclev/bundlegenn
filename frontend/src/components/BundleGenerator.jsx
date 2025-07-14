@@ -562,7 +562,14 @@ const BundleGenerator = () => {
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Create Bundle</h1>
           <p className="text-lg text-gray-700">
-            Build your perfect bundle at <span className="text-amber-800 font-semibold">Cleverpoly.Store</span> and save up to 30%
+            Build your perfect bundle at <a 
+              href="https://cleverpoly.store/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-amber-800 font-semibold hover:text-amber-900 hover:underline transition-colors cursor-pointer"
+            >
+              Cleverpoly.Store
+            </a> and save up to 30%
           </p>
         </div>
 
