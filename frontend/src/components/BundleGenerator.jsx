@@ -87,7 +87,7 @@ const BundleGenerator = () => {
     setError('');
 
     try {
-      const result = await mockSendVerificationCode(formData.email, formData.name);
+      const result = await sendVerificationCode(formData.email, formData.name);
       if (result.success) {
         setFormData(prev => ({ ...prev, sessionId: result.sessionId }));
         setCurrentStep(2);
@@ -95,6 +95,8 @@ const BundleGenerator = () => {
           title: "Verification code sent!",
           description: "Check your email for the 4-digit code.",
         });
+      } else {
+        setError(result.message || 'Failed to send verification code');
       }
     } catch (err) {
       setError('Failed to send verification code. Please try again.');
