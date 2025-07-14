@@ -247,8 +247,8 @@ const BundleGenerator = () => {
   const renderProgressBar = () => (
     <div className="mb-8">
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-medium text-gray-300">Step {currentStep} of 4</span>
-        <span className="text-sm text-gray-400">{Math.round((currentStep / 4) * 100)}%</span>
+        <span className="text-sm font-medium text-gray-700">Step {currentStep} of 4</span>
+        <span className="text-sm text-gray-600">{Math.round((currentStep / 4) * 100)}%</span>
       </div>
       <Progress value={(currentStep / 4) * 100} className="w-full" />
     </div>
