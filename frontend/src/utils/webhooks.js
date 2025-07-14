@@ -54,7 +54,16 @@ export const createBundle = async (bundleData) => {
       },
       body: JSON.stringify({
         action: 'create_bundle',
-        ...bundleData,
+        sessionId: bundleData.sessionId,
+        customerName: bundleData.customerName,
+        customerEmail: bundleData.customerEmail,
+        products: JSON.stringify(bundleData.products),
+        totalProducts: bundleData.totalProducts,
+        totalAmount: bundleData.totalAmount,
+        discountPercentage: bundleData.discountPercentage,
+        discountAmount: bundleData.discountAmount,
+        finalAmount: bundleData.finalAmount,
+        timestamp: bundleData.timestamp,
       }),
     });
 
