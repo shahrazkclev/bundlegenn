@@ -241,39 +241,55 @@ const BundleGenerator = () => {
   const renderProgressBar = () => (
     <div className="mb-8">
       <div className="flex justify-between items-center mb-2">
-        <span className="text-sm font-medium">Step {currentStep} of 4</span>
-        <span className="text-sm text-gray-600">{Math.round((currentStep / 4) * 100)}%</span>
+        <span className="text-sm font-medium text-gray-300">Step {currentStep} of 4</span>
+        <span className="text-sm text-gray-400">{Math.round((currentStep / 4) * 100)}%</span>
       </div>
       <Progress value={(currentStep / 4) * 100} className="w-full" />
     </div>
   );
 
   const renderEmailStep = () => (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto bg-gray-800 border-gray-700">
       <CardHeader>
-        <CardTitle className="text-center">Get Started</CardTitle>
+        <CardTitle className="text-center text-white">Get Started</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleEmailSubmit} className="space-y-4">
-          <div>
-            <Label htmlFor="email">Email Address</Label>
+          <div className="relative">
+            <Label htmlFor="email" className="text-gray-300">Email Address</Label>
             <Input
               id="email"
               type="email"
               value={formData.email}
-              onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+              onChange={handleEmailChange}
+              onFocus={() => setShowSuggestions(emailSuggestions.length > 0)}
               placeholder="Enter your email"
+              className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
               required
             />
+            {showSuggestions && (
+              <div className="absolute top-full left-0 right-0 bg-gray-700 border border-gray-600 rounded-md mt-1 z-10">
+                {emailSuggestions.map((suggestion, index) => (
+                  <div
+                    key={index}
+                    onClick={() => selectEmailSuggestion(suggestion)}
+                    className="px-3 py-2 hover:bg-gray-600 cursor-pointer text-gray-300 text-sm"
+                  >
+                    {suggestion}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <div>
-            <Label htmlFor="name">Full Name</Label>
+            <Label htmlFor="name" className="text-gray-300">Full Name</Label>
             <Input
               id="name"
               type="text"
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
               placeholder="Enter your full name"
+              className="bg-gray-700 border-gray-600 text-white placeholder-gray-400"
               required
             />
           </div>
@@ -282,7 +298,7 @@ const BundleGenerator = () => {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
             Send Verification Code
           </Button>
         </form>
@@ -291,17 +307,17 @@ const BundleGenerator = () => {
   );
 
   const renderVerificationStep = () => (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto bg-gray-800 border-gray-700">
       <CardHeader>
-        <CardTitle className="text-center">Verify Your Email</CardTitle>
-        <p className="text-center text-gray-600">
+        <CardTitle className="text-center text-white">Verify Your Email</CardTitle>
+        <p className="text-center text-gray-400">
           We've sent a 4-digit code to {formData.email}
         </p>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleVerificationSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="code">Verification Code</Label>
+            <Label htmlFor="code" className="text-gray-300">Verification Code</Label>
             <Input
               id="code"
               type="text"
@@ -309,7 +325,7 @@ const BundleGenerator = () => {
               value={formData.verificationCode}
               onChange={(e) => setFormData(prev => ({ ...prev, verificationCode: e.target.value }))}
               placeholder="Enter 4-digit code"
-              className="text-center text-lg tracking-widest"
+              className="text-center text-lg tracking-widest bg-gray-700 border-gray-600 text-white placeholder-gray-400"
               required
             />
           </div>
@@ -318,7 +334,7 @@ const BundleGenerator = () => {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <Button type="submit" className="w-full" disabled={loading}>
+          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={loading}>
             {loading ? 'Verifying...' : 'Verify Code'}
           </Button>
         </form>
@@ -328,10 +344,22 @@ const BundleGenerator = () => {
 
   const renderProductSelection = () => (
     <div className="max-w-6xl mx-auto">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold text-white">Select Products</h2>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => window.open('https://cleverpoly.store/products', '_blank')}
+          className="bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700"
+        >
+          <ExternalLink className="w-4 h-4 mr-2" />
+          See all Products
+        </Button>
+      </div>
+      
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Products Grid */}
         <div className="lg:col-span-2">
-          <h2 className="text-2xl font-bold mb-6">Select Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {availableProducts.map((product) => {
               const isSelected = selectedProducts.includes(product.id);
@@ -340,8 +368,8 @@ const BundleGenerator = () => {
               return (
                 <Card 
                   key={product.id} 
-                  className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
-                    isSelected ? 'ring-2 ring-green-500 bg-green-50' : ''
+                  className={`cursor-pointer transition-all duration-200 hover:shadow-lg bg-gray-800 border-gray-700 ${
+                    isSelected ? 'ring-2 ring-green-500 bg-green-900/20' : ''
                   } ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                   onClick={() => !isDisabled && handleProductToggle(product.id)}
                 >
@@ -352,16 +380,17 @@ const BundleGenerator = () => {
                           checked={isSelected} 
                           disabled={isDisabled}
                           onChange={() => {}} 
+                          className="border-gray-600"
                         />
                         <div>
-                          <h3 className="font-medium text-sm">{product.name}</h3>
-                          <Badge variant="outline" className="mt-1 text-xs">
+                          <h3 className="font-medium text-sm text-white">{product.name}</h3>
+                          <Badge variant="outline" className="mt-1 text-xs border-gray-600 text-gray-400">
                             {product.category}
                           </Badge>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="font-bold text-lg">${product.price}</span>
+                        <span className="font-bold text-lg text-white">${product.price}</span>
                       </div>
                     </div>
                   </CardContent>
@@ -373,47 +402,57 @@ const BundleGenerator = () => {
 
         {/* Order Summary */}
         <div className="lg:col-span-1">
-          <Card className="sticky top-6">
+          <Card className="sticky top-6 bg-gray-800 border-gray-700">
             <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
+              <CardTitle className="text-white">Order Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <div className="flex justify-between">
+                <div className="flex justify-between text-gray-300">
                   <span>Selected Items:</span>
                   <span>{selectedProducts.length}</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between text-gray-300">
                   <span>Subtotal:</span>
                   <span>${subtotal}</span>
                 </div>
                 {discountPercentage > 0 && (
-                  <div className="flex justify-between text-green-600">
+                  <div className="flex justify-between text-green-400">
                     <span>Discount ({discountPercentage}%):</span>
                     <span>-${discountAmount.toFixed(2)}</span>
                   </div>
                 )}
-                <Separator />
-                <div className="flex justify-between font-bold text-lg">
+                <Separator className="bg-gray-600" />
+                <div className="flex justify-between font-bold text-lg text-white">
                   <span>Total:</span>
                   <span>${isSpecialBundle ? '149.00' : finalAmount.toFixed(2)}</span>
                 </div>
               </div>
 
-              {isSpecialBundle && (
-                <Alert>
-                  <AlertDescription className="text-sm">
-                    🎉 Special Bundle Detected! You're getting the premium package at a discounted rate.
+              {selectedProducts.length > 1 && discountPercentage > 0 && (
+                <Alert className="bg-green-900/20 border-green-600">
+                  <AlertDescription className="text-sm text-green-400">
+                    You're saving ${discountAmount.toFixed(2)} with {selectedProducts.length} products!
                   </AlertDescription>
                 </Alert>
               )}
 
-              {discountPercentage > 0 && !isSpecialBundle && (
-                <Alert>
-                  <AlertDescription className="text-sm">
-                    💰 You're saving ${discountAmount.toFixed(2)} with your {discountPercentage}% discount!
+              {isSpecialBundle && (
+                <Alert className="bg-blue-900/20 border-blue-600">
+                  <AlertDescription className="text-sm text-blue-400">
+                    Special Bundle Detected! You're getting the premium package at a discounted rate.
                   </AlertDescription>
                 </Alert>
+              )}
+
+              {bundleCreating && (
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm text-gray-400">
+                    <span>Creating bundle...</span>
+                    <span>{creationProgress}%</span>
+                  </div>
+                  <Progress value={creationProgress} className="w-full" />
+                </div>
               )}
 
               {error && (
@@ -424,10 +463,17 @@ const BundleGenerator = () => {
 
               <Button 
                 onClick={handleBundleSubmit} 
-                className="w-full"
-                disabled={loading || selectedProducts.length === 0}
+                className="w-full bg-blue-600 hover:bg-blue-700"
+                disabled={bundleCreating || selectedProducts.length === 0}
               >
-                {loading ? 'Creating Bundle...' : 'Create Bundle'}
+                {bundleCreating ? (
+                  <>
+                    <Package className="w-4 h-4 mr-2 animate-spin" />
+                    Creating Bundle...
+                  </>
+                ) : (
+                  'Create Bundle'
+                )}
               </Button>
             </CardContent>
           </Card>
@@ -437,12 +483,15 @@ const BundleGenerator = () => {
   );
 
   const renderSuccess = () => (
-    <Card className="w-full max-w-md mx-auto">
+    <Card className="w-full max-w-md mx-auto bg-gray-800 border-gray-700">
       <CardHeader>
-        <CardTitle className="text-center text-green-600">Bundle Created Successfully!</CardTitle>
+        <CardTitle className="text-center text-green-400 flex items-center justify-center gap-2">
+          <CheckCircle className="w-5 h-5" />
+          Bundle Created Successfully!
+        </CardTitle>
       </CardHeader>
       <CardContent className="text-center space-y-4">
-        <p className="text-gray-600">
+        <p className="text-gray-300">
           Your bundle has been created successfully. Click the button below to proceed to payment.
         </p>
         
@@ -457,7 +506,7 @@ const BundleGenerator = () => {
         
         {isSpecialBundle && (
           <>
-            <p className="text-sm text-green-600 font-medium">
+            <p className="text-sm text-green-400 font-medium">
               Special Bundle Package - Premium Deal!
             </p>
             <Button 
@@ -469,7 +518,7 @@ const BundleGenerator = () => {
           </>
         )}
         
-        <Separator />
+        <Separator className="bg-gray-600" />
         
         <Button 
           onClick={() => {
@@ -480,7 +529,7 @@ const BundleGenerator = () => {
             setBundleResponse(null);
           }}
           variant="outline"
-          className="w-full"
+          className="w-full bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600"
         >
           Create Another Bundle
         </Button>
