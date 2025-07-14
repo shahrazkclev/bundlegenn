@@ -116,7 +116,7 @@ const BundleGenerator = () => {
     setError('');
 
     try {
-      const result = await mockVerifyCode(formData.sessionId, formData.verificationCode);
+      const result = await verifyCode(formData.sessionId, formData.verificationCode);
       if (result.success) {
         setCurrentStep(3);
         toast({
@@ -124,7 +124,11 @@ const BundleGenerator = () => {
           description: "Now select your products to create a bundle.",
         });
       } else {
-        setError(result.error || 'Invalid verification code');
+        if (result.error === 'INVALID_CODE') {
+          setError('Invalid or expired code. Please try again.');
+        } else {
+          setError(result.message || 'Verification failed');
+        }
       }
     } catch (err) {
       setError('Verification failed. Please try again.');
