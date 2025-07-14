@@ -116,6 +116,8 @@ const BundleGenerator = () => {
     try {
       const result = await verifyCode(formData.sessionId, formData.verificationCode);
       if (result.success) {
+        // Save the verified code for later use
+        setFormData(prev => ({ ...prev, savedVerificationCode: formData.verificationCode }));
         setCurrentStep(3);
         toast({
           title: "Email verified!",
