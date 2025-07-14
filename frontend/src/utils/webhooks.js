@@ -57,7 +57,14 @@ export const createBundle = async (bundleData) => {
         sessionId: bundleData.sessionId,
         customerName: bundleData.customerName,
         customerEmail: bundleData.customerEmail,
-        products: JSON.stringify(bundleData.products),
+        verificationCode: bundleData.verificationCode,
+        products: bundleData.products.map(product => ({
+          sequenceNumber: product.sequenceNumber,
+          priceId: product.priceId,
+          productName: product.productName,
+          price: product.price,
+          quantity: product.quantity
+        })),
         totalProducts: bundleData.totalProducts,
         totalAmount: bundleData.totalAmount,
         discountPercentage: bundleData.discountPercentage,
