@@ -544,21 +544,21 @@ const BundleGenerator = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-900 py-8 px-4 relative overflow-hidden">
+    <div className="min-h-screen bg-amber-50 py-8 px-4 relative overflow-hidden">
       {/* Grid background */}
       <div 
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-30"
         style={{
-          backgroundImage: `radial-gradient(circle, #4a5568 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(circle, #8b5a3c 1px, transparent 1px)`,
           backgroundSize: '20px 20px'
         }}
       />
       
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">Create Bundle</h1>
-          <p className="text-lg text-gray-400">
-            Build your perfect bundle at <span className="text-blue-400 font-semibold">Cleverpoly.Store</span> and save up to 30%
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Create Bundle</h1>
+          <p className="text-lg text-gray-700">
+            Build your perfect bundle at <span className="text-amber-800 font-semibold">Cleverpoly.Store</span> and save up to 30%
           </p>
         </div>
 
