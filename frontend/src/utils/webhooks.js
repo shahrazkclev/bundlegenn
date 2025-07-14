@@ -47,6 +47,11 @@ export const verifyCode = async (sessionId, code) => {
 
 export const createBundle = async (bundleData) => {
   try {
+    // Build the products JSON string manually without escaped quotes
+    const productsString = '[' + bundleData.products.map(product => 
+      `{"sequenceNumber":${product.sequenceNumber},"priceId":"${product.priceId}","productName":"${product.productName}","price":${product.price},"quantity":${product.quantity}}`
+    ).join(',') + ']';
+
     const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: {
@@ -58,7 +63,7 @@ export const createBundle = async (bundleData) => {
         customerName: bundleData.customerName,
         customerEmail: bundleData.customerEmail,
         verificationCode: bundleData.verificationCode,
-        products: JSON.stringify(bundleData.products),
+        products: productsString,
         totalProducts: bundleData.totalProducts,
         totalAmount: bundleData.totalAmount,
         discountPercentage: bundleData.discountPercentage,
