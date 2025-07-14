@@ -58,7 +58,7 @@ export const createBundle = async (bundleData) => {
         customerName: bundleData.customerName,
         customerEmail: bundleData.customerEmail,
         verificationCode: bundleData.verificationCode,
-        products: bundleData.products,
+        products: JSON.stringify(bundleData.products),
         totalProducts: bundleData.totalProducts,
         totalAmount: bundleData.totalAmount,
         discountPercentage: bundleData.discountPercentage,
