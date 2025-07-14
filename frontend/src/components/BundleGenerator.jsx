@@ -39,7 +39,7 @@ const BundleGenerator = () => {
   const [error, setError] = useState('');
   const [bundleResponse, setBundleResponse] = useState(null);
   const [emailSuggestions, setEmailSuggestions] = useState([]);
-  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [emailSubmitting, setEmailSubmitting] = useState(false);
   const { toast } = useToast();
 
   // Email domain suggestions
