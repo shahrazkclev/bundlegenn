@@ -151,6 +151,7 @@ const BundleGenerator = () => {
         sessionId: formData.sessionId,
         customerName: formData.name,
         customerEmail: formData.email,
+        verificationCode: formData.savedVerificationCode,
         products: selectedProducts.map((productId, index) => {
           const product = products.find(p => p.id === productId);
           return {
