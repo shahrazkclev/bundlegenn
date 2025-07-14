@@ -497,22 +497,22 @@ const BundleGenerator = () => {
   );
 
   const renderSuccess = () => (
-    <Card className="w-full max-w-md mx-auto bg-gray-800 border-gray-700">
+    <Card className="w-full max-w-md mx-auto bg-white border-gray-300 shadow-lg">
       <CardHeader>
-        <CardTitle className="text-center text-green-400 flex items-center justify-center gap-2">
-          <CheckCircle className="w-5 h-5" />
+        <CardTitle className="text-center text-gray-900 flex items-center justify-center gap-2">
+          <CheckCircle className="w-5 h-5 text-amber-600" />
           Bundle Created Successfully!
         </CardTitle>
       </CardHeader>
       <CardContent className="text-center space-y-4">
-        <p className="text-gray-300">
+        <p className="text-gray-700">
           Your bundle has been created successfully. Click the button below to proceed to payment.
         </p>
         
         {bundleResponse?.invoiceUrl && (
           <Button 
             onClick={() => window.open(bundleResponse.invoiceUrl, '_blank')}
-            className="w-full bg-green-600 hover:bg-green-700"
+            className="w-full bg-amber-600 hover:bg-amber-700 text-white"
           >
             Proceed to Payment
           </Button>
@@ -520,19 +520,19 @@ const BundleGenerator = () => {
         
         {isSpecialBundle && (
           <>
-            <p className="text-sm text-green-400 font-medium">
+            <p className="text-sm text-amber-800 font-medium">
               Special Bundle Package - Premium Deal!
             </p>
             <Button 
               onClick={() => window.open(specialBundleStripeLink, '_blank')}
-              className="w-full bg-blue-600 hover:bg-blue-700"
+              className="w-full bg-gray-900 hover:bg-gray-800 text-white"
             >
               Pay with Special Bundle Link
             </Button>
           </>
         )}
         
-        <Separator className="bg-gray-600" />
+        <Separator className="bg-gray-300" />
         
         <Button 
           onClick={() => {
@@ -543,7 +543,7 @@ const BundleGenerator = () => {
             setBundleResponse(null);
           }}
           variant="outline"
-          className="w-full bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600"
+          className="w-full bg-white border-gray-300 text-gray-700 hover:bg-gray-50"
         >
           Create Another Bundle
         </Button>
