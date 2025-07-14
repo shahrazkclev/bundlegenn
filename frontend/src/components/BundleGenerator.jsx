@@ -393,21 +393,42 @@ const BundleGenerator = () => {
         <CardTitle className="text-center text-green-600">Bundle Created Successfully!</CardTitle>
       </CardHeader>
       <CardContent className="text-center space-y-4">
-        <div className="text-6xl">🎉</div>
         <p className="text-gray-600">
-          Your bundle has been created and you should receive further instructions via email.
+          Your bundle has been created successfully. Click the button below to proceed to payment.
         </p>
-        {isSpecialBundle && (
-          <p className="text-sm text-green-600 font-medium">
-            You've been redirected to the special bundle checkout.
-          </p>
+        
+        {bundleResponse?.invoiceUrl && (
+          <Button 
+            onClick={() => window.open(bundleResponse.invoiceUrl, '_blank')}
+            className="w-full bg-green-600 hover:bg-green-700"
+          >
+            Proceed to Payment
+          </Button>
         )}
+        
+        {isSpecialBundle && (
+          <>
+            <p className="text-sm text-green-600 font-medium">
+              Special Bundle Package - Premium Deal!
+            </p>
+            <Button 
+              onClick={() => window.open(specialBundleStripeLink, '_blank')}
+              className="w-full bg-blue-600 hover:bg-blue-700"
+            >
+              Pay with Special Bundle Link
+            </Button>
+          </>
+        )}
+        
+        <Separator />
+        
         <Button 
           onClick={() => {
             setCurrentStep(1);
             setFormData({ email: '', name: '', sessionId: '', verificationCode: '' });
             setSelectedProducts([]);
             setError('');
+            setBundleResponse(null);
           }}
           variant="outline"
           className="w-full"
