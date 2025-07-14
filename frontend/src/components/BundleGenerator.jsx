@@ -230,8 +230,8 @@ const BundleGenerator = () => {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Sending...' : 'Send Verification Code'}
+          <Button type="submit" className="w-full">
+            Send Verification Code
           </Button>
         </form>
       </CardContent>
