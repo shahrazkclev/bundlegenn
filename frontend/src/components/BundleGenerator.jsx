@@ -381,7 +381,7 @@ const BundleGenerator = () => {
         <Button
           variant="outline"
           size="sm"
-          onClick={() => window.open('https://cleverpoly.store/products', '_blank')}
+          onClick={() => window.open('https://cleverpoly.store/', '_blank')}
           className="bg-white border-gray-300 text-gray-700 hover:bg-amber-50"
         >
           <ExternalLink className="w-4 h-4 mr-2" />
