@@ -426,7 +426,7 @@ const BundleGenerator = () => {
         <Button 
           onClick={() => {
             setCurrentStep(1);
-            setFormData({ email: '', name: '', sessionId: '', verificationCode: '' });
+            setFormData({ email: '', name: '', sessionId: '', verificationCode: '', savedVerificationCode: '' });
             setSelectedProducts([]);
             setError('');
             setBundleResponse(null);
