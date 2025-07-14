@@ -28,7 +28,8 @@ const BundleGenerator = () => {
     email: '',
     name: '',
     sessionId: '',
-    verificationCode: ''
+    verificationCode: '',
+    savedVerificationCode: '' // Store the verified code
   });
   const [selectedProducts, setSelectedProducts] = useState([]);
   const [loading, setLoading] = useState(false);
