@@ -1,69 +1,66 @@
-// Mock functions for webhook calls (frontend-only implementation)
-export const mockSendVerificationCode = async (email, name) => {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  
-  // Generate mock session ID
-  const sessionId = `bundle_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-  
-  // Store in localStorage for mock verification
-  localStorage.setItem('mockSession', JSON.stringify({
-    sessionId,
-    email,
-    name,
-    verificationCode: '1234', // Mock code for testing
-    timestamp: Date.now()
-  }));
-  
-  console.log('Mock webhook call - send_verification_code:', {
-    action: 'send_verification_code',
-    customerEmail: email,
-    customerName: name,
-    sessionId
-  });
-  
-  return { success: true, sessionId };
-};
+const WEBHOOK_URL = 'https://hook.us2.make.com/vfar8onjq8w3fgv18s9yonqeh6y67m5h';
 
-export const mockVerifyCode = async (sessionId, code) => {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 800));
-  
-  const mockSession = JSON.parse(localStorage.getItem('mockSession') || '{}');
-  
-  if (mockSession.sessionId === sessionId && code === mockSession.verificationCode) {
-    console.log('Mock webhook call - verify_code:', {
-      action: 'verify_code',
-      sessionId,
-      verificationCode: code
+export const sendVerificationCode = async (email, name) => {
+  try {
+    const response = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        action: 'send_verification_code',
+        customerEmail: email,
+        customerName: name,
+      }),
     });
-    return { success: true };
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error sending verification code:', error);
+    return { success: false, error: 'Network error', message: 'Failed to send verification code' };
   }
-  
-  return { success: false, error: 'Invalid verification code' };
 };
 
-export const mockCreateBundle = async (bundleData) => {
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 1200));
-  
-  console.log('Mock webhook call - create_bundle:', {
-    action: 'create_bundle',
-    ...bundleData
-  });
-  
-  // For the special bundle case, don't actually "create" since Stripe link exists
-  if (bundleData.isSpecialBundle) {
-    return { 
-      success: true, 
-      redirectUrl: bundleData.stripeLink,
-      message: 'Redirecting to pre-configured checkout...'
-    };
+export const verifyCode = async (sessionId, code) => {
+  try {
+    const response = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        action: 'verify_code',
+        sessionId,
+        verificationCode: code,
+      }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error verifying code:', error);
+    return { success: false, error: 'NETWORK_ERROR', message: 'Failed to verify code' };
   }
-  
-  return { 
-    success: true, 
-    bundleId: `bundle_${Date.now()}`,
-    message: 'Bundle created successfully!'
-  };
+};
+
+export const createBundle = async (bundleData) => {
+  try {
+    const response = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        action: 'create_bundle',
+        ...bundleData,
+      }),
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error creating bundle:', error);
+    return { success: false, error: 'NETWORK_ERROR', message: 'Failed to create bundle' };
+  }
 };
