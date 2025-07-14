@@ -17,9 +17,9 @@ import {
   discountTiers 
 } from '../data/products';
 import { 
-  mockSendVerificationCode, 
-  mockVerifyCode, 
-  mockCreateBundle 
+  sendVerificationCode, 
+  verifyCode, 
+  createBundle 
 } from '../utils/mock';
 
 const BundleGenerator = () => {
