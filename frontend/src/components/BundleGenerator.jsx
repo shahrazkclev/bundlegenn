@@ -45,13 +45,35 @@ const BundleGenerator = () => {
   // Email domain suggestions
   const emailDomains = ['gmail.com', 'yahoo.com', 'outlook.com', 'hotmail.com', 'icloud.com', 'protonmail.com'];
 
-  // Calculate totals and discounts
+  // Handle email input and suggestions
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setFormData(prev => ({ ...prev, email: value }));
+    
+    if (value.includes('@') && value.split('@')[1].length > 0) {
+      const domain = value.split('@')[1];
+      const suggestions = emailDomains
+        .filter(d => d.toLowerCase().startsWith(domain.toLowerCase()))
+        .map(d => value.split('@')[0] + '@' + d);
+      setEmailSuggestions(suggestions);
+      setShowSuggestions(suggestions.length > 0);
+    } else {
+      setShowSuggestions(false);
+    }
+  };
+
+  const selectEmailSuggestion = (suggestion) => {
+    setFormData(prev => ({ ...prev, email: suggestion }));
+    setShowSuggestions(false);
+  };
+
+  // Calculate totals and discounts based on product count
   const subtotal = selectedProducts.reduce((sum, productId) => {
     const product = products.find(p => p.id === productId);
     return sum + (product?.price || 0);
   }, 0);
 
-  const discountTier = discountTiers.find(tier => subtotal >= tier.min && subtotal < tier.max);
+  const discountTier = discountTiers.find(tier => selectedProducts.length >= tier.min && selectedProducts.length <= tier.max);
   const discountPercentage = discountTier?.percentage || 0;
   const discountAmount = (subtotal * discountPercentage) / 100;
   const finalAmount = subtotal - discountAmount;
