@@ -359,12 +359,12 @@ const BundleGenerator = () => {
   const renderProductSelection = () => (
     <div className="max-w-6xl mx-auto">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-white">Select Products</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Select Products</h2>
         <Button
           variant="outline"
           size="sm"
           onClick={() => window.open('https://cleverpoly.store/products', '_blank')}
-          className="bg-gray-800 border-gray-600 text-gray-300 hover:bg-gray-700"
+          className="bg-white border-gray-300 text-gray-700 hover:bg-amber-50"
         >
           <ExternalLink className="w-4 h-4 mr-2" />
           See all Products
@@ -382,8 +382,8 @@ const BundleGenerator = () => {
               return (
                 <Card 
                   key={product.id} 
-                  className={`cursor-pointer transition-all duration-200 hover:shadow-lg bg-gray-800 border-gray-700 ${
-                    isSelected ? 'ring-2 ring-green-500 bg-green-900/20' : ''
+                  className={`cursor-pointer transition-all duration-200 hover:shadow-lg bg-white border-gray-300 ${
+                    isSelected ? 'ring-2 ring-amber-500 bg-amber-50' : ''
                   } ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                   onClick={() => !isDisabled && handleProductToggle(product.id)}
                 >
@@ -394,17 +394,17 @@ const BundleGenerator = () => {
                           checked={isSelected} 
                           disabled={isDisabled}
                           onChange={() => {}} 
-                          className="border-gray-600"
+                          className="border-gray-400"
                         />
                         <div>
-                          <h3 className="font-medium text-sm text-white">{product.name}</h3>
-                          <Badge variant="outline" className="mt-1 text-xs border-gray-600 text-gray-400">
+                          <h3 className="font-medium text-sm text-gray-900">{product.name}</h3>
+                          <Badge variant="outline" className="mt-1 text-xs border-gray-400 text-gray-600">
                             {product.category}
                           </Badge>
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="font-bold text-lg text-white">${product.price}</span>
+                        <span className="font-bold text-lg text-gray-900">${product.price}</span>
                       </div>
                     </div>
                   </CardContent>
@@ -416,44 +416,44 @@ const BundleGenerator = () => {
 
         {/* Order Summary */}
         <div className="lg:col-span-1">
-          <Card className="sticky top-6 bg-gray-800 border-gray-700">
+          <Card className="sticky top-6 bg-white border-gray-300 shadow-lg">
             <CardHeader>
-              <CardTitle className="text-white">Order Summary</CardTitle>
+              <CardTitle className="text-gray-900">Order Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <div className="flex justify-between text-gray-300">
+                <div className="flex justify-between text-gray-700">
                   <span>Selected Items:</span>
                   <span>{selectedProducts.length}</span>
                 </div>
-                <div className="flex justify-between text-gray-300">
+                <div className="flex justify-between text-gray-700">
                   <span>Subtotal:</span>
                   <span>${subtotal}</span>
                 </div>
                 {discountPercentage > 0 && (
-                  <div className="flex justify-between text-green-400">
+                  <div className="flex justify-between text-amber-700">
                     <span>Discount ({discountPercentage}%):</span>
                     <span>-${discountAmount.toFixed(2)}</span>
                   </div>
                 )}
-                <Separator className="bg-gray-600" />
-                <div className="flex justify-between font-bold text-lg text-white">
+                <Separator className="bg-gray-300" />
+                <div className="flex justify-between font-bold text-lg text-gray-900">
                   <span>Total:</span>
                   <span>${isSpecialBundle ? '149.00' : finalAmount.toFixed(2)}</span>
                 </div>
               </div>
 
               {selectedProducts.length > 1 && discountPercentage > 0 && (
-                <Alert className="bg-green-900/20 border-green-600">
-                  <AlertDescription className="text-sm text-green-400">
+                <Alert className="bg-amber-50 border-amber-200">
+                  <AlertDescription className="text-sm text-amber-800">
                     You're saving ${discountAmount.toFixed(2)} with {selectedProducts.length} products!
                   </AlertDescription>
                 </Alert>
               )}
 
               {isSpecialBundle && (
-                <Alert className="bg-blue-900/20 border-blue-600">
-                  <AlertDescription className="text-sm text-blue-400">
+                <Alert className="bg-gray-50 border-gray-200">
+                  <AlertDescription className="text-sm text-gray-700">
                     Special Bundle Detected! You're getting the premium package at a discounted rate.
                   </AlertDescription>
                 </Alert>
@@ -461,7 +461,7 @@ const BundleGenerator = () => {
 
               {bundleCreating && (
                 <div className="space-y-2">
-                  <div className="flex justify-between text-sm text-gray-400">
+                  <div className="flex justify-between text-sm text-gray-600">
                     <span>Creating bundle...</span>
                     <span>{creationProgress}%</span>
                   </div>
@@ -477,7 +477,7 @@ const BundleGenerator = () => {
 
               <Button 
                 onClick={handleBundleSubmit} 
-                className="w-full bg-blue-600 hover:bg-blue-700"
+                className="w-full bg-gray-900 hover:bg-gray-800 text-white"
                 disabled={bundleCreating || selectedProducts.length === 0}
               >
                 {bundleCreating ? (
