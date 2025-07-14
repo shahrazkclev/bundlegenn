@@ -173,8 +173,19 @@ const BundleGenerator = () => {
       return;
     }
 
-    setLoading(true);
+    setBundleCreating(true);
     setError('');
+
+    // Simulate progress animation
+    const progressInterval = setInterval(() => {
+      setCreationProgress(prev => {
+        if (prev >= 90) {
+          clearInterval(progressInterval);
+          return 90;
+        }
+        return prev + 10;
+      });
+    }, 200);
 
     try {
       const bundleData = {
@@ -203,20 +214,27 @@ const BundleGenerator = () => {
       };
 
       const result = await createBundle(bundleData);
+      
+      // Complete progress
+      setCreationProgress(100);
+      
       if (result.success) {
         setBundleResponse(result);
-        setCurrentStep(4);
-        toast({
-          title: "Bundle created!",
-          description: result.message || "Your bundle has been created successfully.",
-        });
+        setTimeout(() => {
+          setCurrentStep(4);
+          toast({
+            title: "Bundle created!",
+            description: result.message || "Your bundle has been created successfully.",
+          });
+        }, 500);
       } else {
         setError(result.message || 'Failed to create bundle');
       }
     } catch (err) {
       setError('Failed to create bundle. Please try again.');
     } finally {
-      setLoading(false);
+      setBundleCreating(false);
+      setCreationProgress(0);
     }
   };
 
