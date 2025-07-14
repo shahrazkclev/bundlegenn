@@ -116,6 +116,10 @@ const BundleGenerator = () => {
     }
 
     setError('');
+    setEmailSubmitting(true);
+    
+    // Small delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     // Generate session ID on frontend
     const sessionId = `bundle_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
@@ -126,6 +130,7 @@ const BundleGenerator = () => {
       console.error('Background webhook error:', err);
     });
     
+    setEmailSubmitting(false);
     // Immediately proceed to verification step
     setCurrentStep(2);
     toast({
