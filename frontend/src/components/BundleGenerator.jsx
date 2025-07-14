@@ -448,31 +448,23 @@ const BundleGenerator = () => {
                   <span>Subtotal:</span>
                   <span>${subtotal}</span>
                 </div>
-                {discountPercentage > 0 && (
+                {discountAmount > 0 && (
                   <div className="flex justify-between text-amber-700">
-                    <span>Discount ({discountPercentage}%):</span>
+                    <span>Discount {discountPercentage > 0 ? `(${discountPercentage}%)` : ''}:</span>
                     <span>-${discountAmount.toFixed(2)}</span>
                   </div>
                 )}
                 <Separator className="bg-gray-300" />
                 <div className="flex justify-between font-bold text-lg text-gray-900">
                   <span>Total:</span>
-                  <span>${isSpecialBundle ? '149.00' : finalAmount.toFixed(2)}</span>
+                  <span>${finalAmount.toFixed(2)}</span>
                 </div>
               </div>
 
-              {selectedProducts.length > 1 && discountPercentage > 0 && (
+              {selectedProducts.length > 1 && discountAmount > 0 && (
                 <Alert className="bg-amber-50 border-amber-200">
                   <AlertDescription className="text-sm text-amber-800">
                     You're saving ${discountAmount.toFixed(2)} with {selectedProducts.length} products!
-                  </AlertDescription>
-                </Alert>
-              )}
-
-              {isSpecialBundle && (
-                <Alert className="bg-gray-50 border-gray-200">
-                  <AlertDescription className="text-sm text-gray-700">
-                    Special Bundle Detected! You're getting the premium package at a discounted rate.
                   </AlertDescription>
                 </Alert>
               )}
