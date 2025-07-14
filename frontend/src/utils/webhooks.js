@@ -1,6 +1,6 @@
 const WEBHOOK_URL = 'https://hook.us2.make.com/vfar8onjq8w3fgv18s9yonqeh6y67m5h';
 
-export const sendVerificationCode = async (email, name) => {
+export const sendVerificationCode = async (email, name, sessionId) => {
   try {
     const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
@@ -11,6 +11,7 @@ export const sendVerificationCode = async (email, name) => {
         action: 'send_verification_code',
         customerEmail: email,
         customerName: name,
+        sessionId: sessionId,
       }),
     });
 
