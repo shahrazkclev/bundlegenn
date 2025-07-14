@@ -262,12 +262,13 @@ export const disabledWhenLazyMotionSelected = [
 export const specialBundleProducts = [1, 2, 3]; // Lazy-Motion Library, Advanced 3D, Textify
 export const specialBundleStripeLink = "https://buy.stripe.com/28og2K5041VP7pC14s?prefilled_promo_code=ALN1";
 
-// Discount tiers
+// Discount tiers - starts from 2+ products
 export const discountTiers = [
-  { min: 0, max: 49, percentage: 0 },
-  { min: 50, max: 99, percentage: 10 },
-  { min: 100, max: 149, percentage: 15 },
-  { min: 150, max: 199, percentage: 20 },
-  { min: 200, max: 249, percentage: 25 },
-  { min: 250, max: Infinity, percentage: 30 }
+  { min: 0, max: 1, percentage: 0 },
+  { min: 2, max: 3, percentage: 5 },
+  { min: 4, max: 6, percentage: 10 },
+  { min: 7, max: 10, percentage: 15 },
+  { min: 11, max: 15, percentage: 20 },
+  { min: 16, max: 20, percentage: 25 },
+  { min: 21, max: Infinity, percentage: 30 }
 ];
