@@ -47,10 +47,10 @@ export const verifyCode = async (sessionId, code) => {
 
 export const createBundle = async (bundleData) => {
   try {
-    // Build the products JSON string exactly as requested
+    // Build the products JSON string with each product on a separate line
     const productsJsonString = '[' + bundleData.products.map(product => 
       `{"sequenceNumber":${product.sequenceNumber},"priceId":"${product.priceId}","productName":"${product.productName}","price":${product.price},"quantity":${product.quantity}}`
-    ).join(',') + ']';
+    ).join(',\n') + ']';
 
     // Build the entire request body as a string to avoid escaping
     const requestBody = `{
