@@ -47,25 +47,33 @@ export const verifyCode = async (sessionId, code) => {
 
 export const createBundle = async (bundleData) => {
   try {
+    // Build the products JSON string exactly as requested
+    const productsJsonString = '[' + bundleData.products.map(product => 
+      `{"sequenceNumber":${product.sequenceNumber},"priceId":"${product.priceId}","productName":"${product.productName}","price":${product.price},"quantity":${product.quantity}}`
+    ).join(',') + ']';
+
+    // Build the entire request body as a string to avoid escaping
+    const requestBody = `{
+      "action": "create_bundle",
+      "sessionId": "${bundleData.sessionId}",
+      "customerName": "${bundleData.customerName}",
+      "customerEmail": "${bundleData.customerEmail}",
+      "verificationCode": "${bundleData.verificationCode}",
+      "products": "${productsJsonString}",
+      "totalProducts": ${bundleData.totalProducts},
+      "totalAmount": ${bundleData.totalAmount},
+      "discountPercentage": ${bundleData.discountPercentage},
+      "discountAmount": ${bundleData.discountAmount},
+      "finalAmount": ${bundleData.finalAmount},
+      "timestamp": "${bundleData.timestamp}"
+    }`;
+
     const response = await fetch(WEBHOOK_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        action: 'create_bundle',
-        sessionId: bundleData.sessionId,
-        customerName: bundleData.customerName,
-        customerEmail: bundleData.customerEmail,
-        verificationCode: bundleData.verificationCode,
-        products: bundleData.products,
-        totalProducts: bundleData.totalProducts,
-        totalAmount: bundleData.totalAmount,
-        discountPercentage: bundleData.discountPercentage,
-        discountAmount: bundleData.discountAmount,
-        finalAmount: bundleData.finalAmount,
-        timestamp: bundleData.timestamp,
-      }),
+      body: requestBody,
     });
 
     const data = await response.json();
