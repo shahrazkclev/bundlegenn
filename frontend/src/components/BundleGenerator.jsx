@@ -31,8 +31,7 @@ const BundleGenerator = () => {
     verificationCode: ''
   });
   const [selectedProducts, setSelectedProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [bundleResponse, setBundleResponse] = useState(null);
   const { toast } = useToast();
 
   // Calculate totals and discounts
