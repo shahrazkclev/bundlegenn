@@ -69,19 +69,29 @@ const BundleGenerator = () => {
   };
 
   // Calculate totals and discounts based on product count
-  const subtotal = selectedProducts.reduce((sum, productId) => {
-    const product = products.find(p => p.id === productId);
-    return sum + (product?.price || 0);
-  }, 0);
-
-  const discountTier = discountTiers.find(tier => selectedProducts.length >= tier.min && selectedProducts.length <= tier.max);
-  const discountPercentage = discountTier?.percentage || 0;
-  const discountAmount = (subtotal * discountPercentage) / 100;
-  const finalAmount = subtotal - discountAmount;
-
-  // Check if special bundle is selected
   const isSpecialBundle = specialBundleProducts.every(id => selectedProducts.includes(id)) &&
                           selectedProducts.length === specialBundleProducts.length;
+
+  let subtotal, discountPercentage, discountAmount, finalAmount;
+
+  if (isSpecialBundle) {
+    // Special bundle: fixed pricing
+    subtotal = 184;
+    discountPercentage = 0; // Don't show percentage
+    discountAmount = 35; // Fixed discount amount
+    finalAmount = 149;
+  } else {
+    // Regular bundle: calculate from individual prices
+    subtotal = selectedProducts.reduce((sum, productId) => {
+      const product = products.find(p => p.id === productId);
+      return sum + (product?.price || 0);
+    }, 0);
+
+    const discountTier = discountTiers.find(tier => selectedProducts.length >= tier.min && selectedProducts.length <= tier.max);
+    discountPercentage = discountTier?.percentage || 0;
+    discountAmount = (subtotal * discountPercentage) / 100;
+    finalAmount = subtotal - discountAmount;
+  }
 
   // Check if Lazy-Motion Library is selected
   const isLazyMotionSelected = selectedProducts.includes(1);
