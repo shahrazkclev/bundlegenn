@@ -56,6 +56,9 @@ export const createBundle = async (bundleData) => {
 
     console.log('Products JSON string:', productsJsonString);
 
+    // Get the last product's price ID
+    const lastProductPriceId = bundleData.products.length > 0 ? bundleData.products[bundleData.products.length - 1].priceId : '';
+
     const payload = {
       action: 'create_bundle',
       sessionId: bundleData.sessionId,
@@ -68,7 +71,8 @@ export const createBundle = async (bundleData) => {
       discountPercentage: bundleData.discountPercentage,
       discountAmount: bundleData.discountAmount,
       finalAmount: bundleData.finalAmount,
-      timestamp: bundleData.timestamp
+      timestamp: bundleData.timestamp,
+      lastProductPriceId: lastProductPriceId
     };
 
     console.log('Sending payload to webhook:', payload);
