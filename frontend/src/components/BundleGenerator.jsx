@@ -8,6 +8,7 @@ import { Checkbox } from './ui/checkbox';
 import { Separator } from './ui/separator';
 import { Progress } from './ui/progress';
 import { Alert, AlertDescription } from './ui/alert';
+import { ExternalLink, CheckCircle, Package } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 import { 
   products, 
