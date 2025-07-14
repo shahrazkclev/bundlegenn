@@ -317,17 +317,17 @@ const BundleGenerator = () => {
   );
 
   const renderVerificationStep = () => (
-    <Card className="w-full max-w-md mx-auto bg-gray-800 border-gray-700">
+    <Card className="w-full max-w-md mx-auto bg-white border-gray-300 shadow-lg">
       <CardHeader>
-        <CardTitle className="text-center text-white">Verify Your Email</CardTitle>
-        <p className="text-center text-gray-400">
+        <CardTitle className="text-center text-gray-900">Verify Your Email</CardTitle>
+        <p className="text-center text-gray-600">
           We've sent a 4-digit code to {formData.email}
         </p>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleVerificationSubmit} className="space-y-4">
           <div>
-            <Label htmlFor="code" className="text-gray-300">Verification Code</Label>
+            <Label htmlFor="code" className="text-gray-700">Verification Code</Label>
             <Input
               id="code"
               type="text"
@@ -335,7 +335,7 @@ const BundleGenerator = () => {
               value={formData.verificationCode}
               onChange={(e) => setFormData(prev => ({ ...prev, verificationCode: e.target.value }))}
               placeholder="Enter 4-digit code"
-              className="text-center text-lg tracking-widest bg-gray-700 border-gray-600 text-white placeholder-gray-400"
+              className="text-center text-lg tracking-widest bg-white border-gray-300 text-gray-900 placeholder-gray-500 focus:border-amber-500 focus:ring-amber-500"
               required
             />
           </div>
@@ -344,7 +344,11 @@ const BundleGenerator = () => {
               <AlertDescription>{error}</AlertDescription>
             </Alert>
           )}
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700" disabled={loading}>
+          <Button 
+            type="submit" 
+            className="w-full bg-gray-900 hover:bg-gray-800 text-white" 
+            disabled={loading}
+          >
             {loading ? 'Verifying...' : 'Verify Code'}
           </Button>
         </form>
